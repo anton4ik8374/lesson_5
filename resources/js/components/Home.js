@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer} from "mobx-react";
-import Auth from "./form/Auth";
+import Auth from "./Auth/Auth";
 import ArticlesCmp from "./Articles/Articles";
 import {Container, Box} from '@material-ui/core';
 import FreeStyle from "./Style/FreeStyle";

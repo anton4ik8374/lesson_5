@@ -15,6 +15,8 @@ use App\Http\Controllers\IndexController;
 |
 */
 
-Route::post('js-6-api/auth.php', [IndexController::class, 'Auth']);
-Route::get('js-6-api/articles.php', [IndexController::class, 'load']);
+Route::post('js-ra-tokens-api/auth/login.php', [IndexController::class, 'Auth']);
+Route::post('js-ra-tokens-api/auth/check.php', [IndexController::class, 'Check']);
+Route::post('js-ra-tokens-api/auth/refresh.php', [IndexController::class, 'Refresh']);
+Route::get('js-ra-tokens-api/articles.php', [IndexController::class, 'load']);
 Route::delete('js-6-api/articles.php', [IndexController::class, 'delete']);

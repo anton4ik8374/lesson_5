@@ -1,7 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx"
-import axios from "axios";
-import info from "../../form/Helpers/ServiceInfo";
-import User from "../../form/Stores/User";
+import mainApi from '../../Helpers/Api'
+import info from "../../Helpers/ServiceInfo";
+import User from "../../Auth/Stores/User";
 
 class Articles {
     articles = [];
@@ -31,7 +31,7 @@ class Articles {
 
     async loading() {
         let context = this;
-        await axios.get(info.Articles,{headers: { Authorization:  User.currentJWTToken }}).then((response) => {
+        await mainApi.get(info.Articles).then((response) => {
             if (response.status === 200) {
                 runInAction(() => {
                     context.addArticles(response.data);
@@ -40,13 +40,17 @@ class Articles {
                 context.addMessage(response.data.errors[0]);
             }
         }).catch(error => {
-            context.addMessage('Непредвиденная ошибка!');
+            User.refresh().then(()=>{
+                if(User.checkAuth) {
+                    context.loading();
+                }
+            });
         });
     }
 
     async delete(id) {
         let context = this;
-        await axios.delete(`${info.Articles}?id=${id}`,{headers: { Authorization:  User.currentJWTToken }}).then((response) => {
+        await mainApi.delete(`${info.Articles}?id=${id}`).then((response) => {
             if (response.status === 200 && response.data.res) {
                 context.filtersDelet(id);
                 context.addMessage(null);

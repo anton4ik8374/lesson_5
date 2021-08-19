@@ -2,7 +2,7 @@ import React from 'react';
 import {observer} from "mobx-react";
 import {Container, Box, ButtonGroup, Button} from '@material-ui/core';
 import FreeStyle from "../Style/FreeStyle";
-import User from "../form/Stores/User";
+import User from "../Auth/Stores/User";
 import Articles from "./Stores/Articles";
 import OneArticle from "./OneArticle";
 import {Alert} from '@material-ui/lab';
@@ -15,9 +15,6 @@ const ArticlesCmp = () => {
         Articles.loading();
     }
 
-    let filterArticles = (e) => {
-        Articles.filters();
-    }
     let articles = Articles.articles.map((element) => {
         return <OneArticle key={element.id_article} article={element}/>;
     });
@@ -35,16 +32,6 @@ const ArticlesCmp = () => {
                         className={classes.submit}
                     >
                         Загрузить статьи
-                    </Button>
-                    <Button
-                        type="submit"
-                        disabled={!articles.length}
-                        variant="outlined"
-                        color="primary"
-                        onClick={filterArticles}
-                        className={classes.submitMy}
-                    >
-                        Показать только мои
                     </Button>
                 </ButtonGroup>
                 <Box className={classes.articlesContainerAll}>

@@ -2,7 +2,7 @@ import React from 'react';
 import {observer} from "mobx-react";
 import {Card, CardContent, Typography, CardActions, Button} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import User from "../form/Stores/User";
+import User from "../Auth/Stores/User";
 import Articles from "./Stores/Articles";
 
 const useStyles = makeStyles({
@@ -26,7 +26,7 @@ const OneArticle = ({article}) => {
     const classes = useStyles();
     let thisMyArticles = () =>{
         if(Number(User.user.userId) === Number(article.id_user)){
-            return false;
+            return true;
         }
         return true;
     }

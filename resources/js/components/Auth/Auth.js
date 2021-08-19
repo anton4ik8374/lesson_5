@@ -4,6 +4,7 @@ import User from "./Stores/User";
 import loginStyles from "./style/loginStyle";
 import {Typography, Box, TextField, Button, Paper} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
+import SkeletonMy from "../Helpers/SkeletonMy";
 
 const Auth = () => {
     const classes = loginStyles();
@@ -12,8 +13,7 @@ const Auth = () => {
     const [statePassword, setPassword] = useState(User.password);
 
     useEffect(() => {
-        User.addJWTToken(localStorage.getItem('JWTToken'));
-        User.userBytoken();
+        User.Check();
     }, []);
 
     const inputChangeHandlerLogin = (event) => {
@@ -42,6 +42,7 @@ const Auth = () => {
 
 
     return (
+        User.loaded ?
         !User.checkAuth ?
             (<>
                 <Paper className={classes.paper}>
@@ -92,6 +93,7 @@ const Auth = () => {
             :
             (<Paper className={classes.paper}>
                 <p>id: {User.user.userId}</p>
+                <i>Name: {User.user.userName}</i>
                 <Box className={classes.containerForm}>
                     <Button
                         type="submit"
@@ -105,6 +107,8 @@ const Auth = () => {
                     </Button>
                 </Box>
             </Paper>)
+            :
+            (<SkeletonMy/>)
     );
 };
 
